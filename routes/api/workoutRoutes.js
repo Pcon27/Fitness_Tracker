@@ -1,10 +1,9 @@
 const router = require('express').Router();
 const mongojs = require("mongojs");
-const { Workout } = require("../../Models");
+const { Workout } = require("../../models");
 
-// Get all workouts in ascending order
+
 router.get('/', async (req, res) => {
-    // Use $addFields to get the total duration for the workout https://docs.mongodb.com/manual/reference/operator/aggregation/addFields/#mongodb-pipeline-pipe.-addFields
     Workout.aggregate([
         { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
         { $sort: { day: 1 } }
@@ -19,7 +18,7 @@ router.get('/', async (req, res) => {
         });
 });
 
-// Add an exercise to a workout
+
 router.put('/:id', async (req, res) => {
     Workout.updateOne({ "_id": mongojs.ObjectId(req.params.id) },
         { $push: { "exercises": req.body } }, (err, data) => {
@@ -32,7 +31,7 @@ router.put('/:id', async (req, res) => {
         })
 });
 
-// Add a new workout
+
 router.post('/', async (req, res) => {
     Workout.insertMany([{}], (err, data) => {
         if (err) {
@@ -42,8 +41,32 @@ router.post('/', async (req, res) => {
             res.json(data[0]);
         }
     })
-}
-);
+});
+
+router.get('/range', async (req, res) => {
+    Workout.aggregate([
+        { $addFields: { totalDuration: { $sum: "$exercises.duration" } } },
+        { $sort: { day: -1 } }, 
+        { $limit: 7 },  
+        { $sort: { day: 1 } } 
+    ],
+        (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(data);
+                res.json(data);
+            }
+        });
+    });
+
+
 
 
 module.exports = router;
+
+
+
+
+
+
