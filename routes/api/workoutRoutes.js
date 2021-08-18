@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const mongojs = require("mongojs");
-const { Workout } = require("../../models");
+const { Workout } = require("../../Models");
 
 
 router.get('/', async (req, res) => {
