@@ -39,3 +39,7 @@ This application is using the MIT license.
 email: (pconsagra@g.ucla.edu)
 
 Github: (https://github.com/pcon27)
+
+![gif of routes](https://github.com/Pcon27/Fitness_Tracker/blob/e3c6ec63ba581e514932c2174acdc23128eea14d/workout-routes.gif)
+
+![image of model](https://github.com/Pcon27/Fitness_Tracker/blob/e3c6ec63ba581e514932c2174acdc23128eea14d/model.png)
